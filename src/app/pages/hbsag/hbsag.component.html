@@ -1,0 +1,53 @@
+<div class="input-container">
+  <div class="input-condition">
+    <div class="input-box">
+      <span class="title">试验时间：</span>
+      <nz-range-picker class="input-component" nzSize="small" [(ngModel)]="date" (ngModelChange)="onDateChange($event)">
+      </nz-range-picker>
+    </div>
+
+    <div class="input-box">
+      <span class="title">组合：</span>
+      <nz-select class="input-component" nzSize="small" nzShowSearch [(ngModel)]="multipleValue" nzMode="multiple"
+        nzPlaceHolder="Please select">
+        <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+      </nz-select>
+    </div>
+
+    <div class="input-box">
+      <span class="title">测试人员：</span>
+      <nz-select class="input-component" nzSize="small" nzShowSearch [(ngModel)]="multipleValue" nzMode="multiple"
+        nzPlaceHolder="Please select">
+        <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+      </nz-select>
+    </div>
+  </div>
+
+  <div class="input-btn">
+    <button nz-button nzType="primary">搜索</button>
+    <button nz-button>重置</button>
+  </div>
+</div>
+
+<div class="data-container">
+  <div echarts [options]="options" [merge]="updateOptions" class="chart"></div>
+  <nz-table #basicTable [nzData]="listOfData" nzSize="small" nzTableLayout="fixed" nzBordered
+    [nzScroll]="{ y: '200px' }">
+    <thead>
+      <tr>
+        <th>试验批号</th>
+        <th>日期</th>
+        <th>操作人</th>
+        <th>od值</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{ data.platename }}</td>
+        <td>{{ data.savetime | date: 'yyyy-MM-dd' }}</td>
+        <td>{{ data.comcheckdoctor }}</td>
+        <td>{{ data.odnumber }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

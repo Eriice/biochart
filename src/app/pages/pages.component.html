@@ -1,0 +1,54 @@
+<nz-layout class="app-layout">
+  <nz-header class="page-header">
+    <div class="app-header">
+      <div class="sidebar-logo">
+        <h1>BIOTOOL</h1>
+      </div>
+      <div class="link-db">
+        <a nz-button nzType="link" (click)="showModal()">配置连接信息</a>
+      </div>
+    </div>
+  </nz-header>
+
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="The first Modal" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+      <p>Content one</p>
+      <p>Content two</p>
+      <p>Content three</p>
+    </ng-container>
+  </nz-modal>
+
+  <nz-layout class=" page-container">
+    <nz-sider>
+      <ul nz-menu nzTheme="white" nzMode="inline">
+        <li nz-menu-item nzOpen nzTitle="HBSAG" nzIcon="dashboard">
+          <!-- <i nz-icon nzType="video-camera"></i> -->
+          <a routerLink="/pages/hbsag/">HBSAG</a>
+        </li>
+        <li nz-menu-item nzOpen nzTitle="HIV" nzIcon="dashboard">
+          <!-- <i nz-icon nzType="video-camera"></i> -->
+          <a routerLink="/pages/hbsag/">HIV</a>
+        </li>
+        <li nz-menu-item nzOpen nzTitle="HCMV-lgM" nzIcon="dashboard">
+          <!-- <i nz-icon nzType="video-camera"></i> -->
+          <a routerLink="/pages/hbsag/">HCMV-lgM</a>
+        </li>
+        <li nz-menu-item nzOpen nzTitle="HCMV-lgG" nzIcon="dashboard">
+          <!-- <i nz-icon nzType="video-camera"></i> -->
+          <a routerLink="/pages/hbsag/">HCMV-lgG</a>
+        </li>
+
+      </ul>
+    </nz-sider>
+
+    <div class="page-main">
+      <nz-layout>
+        <nz-content>
+          <div class="inner-content">
+            <router-outlet></router-outlet>
+          </div>
+        </nz-content>
+      </nz-layout>
+    </div>
+  </nz-layout>
+</nz-layout>

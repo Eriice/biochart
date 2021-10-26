@@ -11,7 +11,7 @@ function createWindow() {
         height: 600,
         webPreferences: {
             nodeIntegration: true,
-            contextIsolation: false
+            contextIsolation: false,
         }
     });
     win.loadURL(url.format({
@@ -67,8 +67,18 @@ function getDirectory() {
     });
 }
 electron_1.ipcMain.on("navigateDirectory", (event, path) => {
+    console.log("on nav");
     process.chdir(path);
     getImages();
     getDirectory();
+});
+electron_1.ipcMain.on('openDialog', (event, arg) => {
+    electron_1.dialog.showOpenDialog({
+        properties: ["openFile"]
+    })
+        .then(res => {
+        console.log("文件路径", res.filePaths[0]);
+        res.filePaths.length > 0 && win.webContents.send("fileData", res.filePaths[0]);
+    });
 });
 //# sourceMappingURL=main.js.map
