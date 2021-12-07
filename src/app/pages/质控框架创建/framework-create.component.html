@@ -1,0 +1,30 @@
+<nz-alert *ngIf="frameworkStatistic === null" class="info" nzType="info"
+  nzMessage="【自动模式】将自动选取前 20 条非失控的数据，作为即刻法质控数据。确认数据无误后，点击【创建】按钮即可构建质控框架">
+</nz-alert>
+
+<nz-alert *ngIf="frameworkStatistic !== null" class="info" nzType="info" nzMessage="质控框架已经创建">
+</nz-alert>
+
+<div class="input-container">
+  <div class="input-condition">
+    <div class="input-box">
+      <span class="title">创建模式：</span>
+      <nz-radio-group [(ngModel)]="createMode" [nzDisabled]="frameworkStatistic !== null">
+        <label nz-radio nzValue="A">自动</label>
+      </nz-radio-group>
+    </div>
+  </div>
+
+  <div class="input-btn">
+    <button *ngIf="frameworkStatistic === null" nz-button nzType="primary" (click)="create()"
+      [disabled]="isLoadingData || isCreating">创建</button>
+  </div>
+</div>
+
+<app-without-framework *ngIf="frameworkStatistic === null" [data]="qualityData" [isLoading]="isLoading">
+</app-without-framework>
+<app-with-framework *ngIf="frameworkStatistic !== null" [data]="qualityData" [isLoading]="isLoading"
+  [calc]="frameworkStatistic">
+</app-with-framework>
+
+<app-instant-table [listOfData]="qualityData"></app-instant-table>

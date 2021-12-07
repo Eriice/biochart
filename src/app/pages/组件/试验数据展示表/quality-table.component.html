@@ -1,0 +1,34 @@
+<div class="title">
+  <a nz-button nzSize="small" nzType="link">导出csv</a>
+</div>
+
+<nz-table #table [nzData]="data" nzSize="small" nzBordered [nzLoading]="isLoading">
+  <thead>
+    <tr>
+      <th>日期</th>
+      <th>试验批号</th>
+
+      <th>操作人</th>
+      <th>测量值</th>
+      <th>阴性值</th>
+      <th>测量值/阴性值</th>
+      <th>结果</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of table.data">
+      <td>{{ data['创建时间'] | date: 'yyyy-MM-dd' }}</td>
+      <td>{{ data['批次'] }}</td>
+      <td>{{ data['操作人'] }}</td>
+      <td>{{ data['测量值'] }}</td>
+      <td>{{ data['阴性值'] }}</td>
+      <td>{{ data['测量值/阴性值'] }}</td>
+      <td>
+        <nz-tag *ngIf="A[data['结果']] == '在控'" nzColor="success">在控</nz-tag>
+        <nz-tag *ngIf="A[data['结果']] == '警告'" nzColor="warning">警告</nz-tag>
+        <nz-tag *ngIf="A[data['结果']] == '失控'" nzColor="error">失控</nz-tag>
+      </td>
+
+    </tr>
+  </tbody>
+</nz-table>

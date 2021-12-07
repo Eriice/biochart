@@ -1,0 +1,38 @@
+<div class="title">
+  <div>参与本次更新的数据</div>
+  <a nz-button nzSize="small" nzType="link">导出csv</a>
+</div>
+
+<nz-table #table [nzData]="data" nzSize="small" nzBordered>
+  <thead>
+    <tr>
+      <th>日期</th>
+      <th>试验批号</th>
+
+      <th>试剂</th>
+      <th>样品</th>
+
+      <th>操作人</th>
+      <th>测量值</th>
+      <th>阴性值</th>
+      <th>结果</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of table.data" [ngClass]="{'delete-row': result[data['结果']] == '失控'}">
+      <td>{{ data['创建时间'] | date: 'yyyy-MM-dd' }}</td>
+      <td>{{ data['批次'] }}</td>
+      <td>{{ data['试剂批号'] }}</td>
+      <td>{{ data['样品批号'] }}</td>
+
+      <td>{{ data['操作人'] }}</td>
+      <td>{{ data['测量值'] }}</td>
+      <td>{{ data['阴性值'] }}</td>
+      <td>
+        <nz-tag *ngIf="result[data['结果']] == '在控'" nzColor="success">在控</nz-tag>
+        <nz-tag *ngIf="result[data['结果']] == '警告'" nzColor="warning">警告</nz-tag>
+        <nz-tag *ngIf="result[data['结果']] == '失控'" nzColor="error">失控</nz-tag>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

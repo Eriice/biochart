@@ -1,0 +1,27 @@
+.input-container {
+  background-color: #f4f3f4;
+  padding: 20px;
+  display: flex;
+  gap: 10px;
+
+  .input-condition {
+    width: 100%;
+
+    .input-box {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      .title {
+        font-size: 12px;
+        font-weight: bold;
+        color: #555;
+      }
+    }
+  }
+}
+
+.btn-group {
+  display: flex;
+  gap: 10px 10px;
+}

@@ -1,0 +1,11 @@
+::host {
+  margin-bottom: 40px;
+  background-color: red;
+}
+
+.title {
+  padding: 16px 0 8px;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}

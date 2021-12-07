@@ -1,0 +1,120 @@
+<!-- 只具备更新框架，提示设置更新配置 -->
+<div class="input-container">
+  <form class="input-condition" *ngIf="pageForm" [formGroup]="pageForm">
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <div class="input-box">
+          <span class="title">质控规则：</span>
+          <nz-radio-group formControlName="regularMode">
+            <label *ngFor="let item of regularModeList" [nzValue]="item[1]" nz-radio>{{ item[0] }}</label>
+          </nz-radio-group>
+        </div>
+        <div *ngIf="
+            pageForm.get('regularMode').value === enumRegularMode['单规则']
+          " nz-row>
+          <div class="input-box">
+            <nz-radio-group formControlName="regular">
+              <div *ngFor="let strategyList of strategyGroup" nz-col nzSpan="24">
+                <label *ngFor="let item of strategyList" [nzValue]="item" nz-radio>{{ "失控" + regularMap[item]["失控"] }}
+                  -
+                  {{ "警告" + regularMap[item]["警告"] }}
+                </label>
+              </div>
+            </nz-radio-group>
+          </div>
+        </div>
+        <div formArrayName="regularArray" *ngIf="
+            pageForm.get('regularMode').value === enumRegularMode['复合规则']
+          " nz-row>
+          <div *ngFor="let strategyList of strategyGroup; let i = index" nz-col nzSpan="24">
+            <div class="input-box">
+              <nz-radio-group [formControlName]="i">
+                <label *ngFor="let item of strategyList" [nzValue]="item" nz-radio>{{ "失控" + regularMap[item]["失控"] }}
+                  -
+                  {{ "警告" + regularMap[item]["警告"] }}
+                </label>
+              </nz-radio-group>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div nz-col nzSpan="24">
+        <div class="input-box">
+          <span class="title">阴性规则：</span>
+          <nz-radio-group formControlName="negativeCalc">
+            <label *ngFor="let item of enumNagativeMethod" [nzValue]="item[1]" nz-radio>{{ item[0] }}</label>
+          </nz-radio-group>
+        </div>
+      </div>
+    </div>
+
+    <nz-divider></nz-divider>
+
+    <div nz-row nzGutter="16">
+      <ng-container *ngIf="pageForm.get('negativeCalc').value === '系数相乘'">
+        <div nz-col nzSpan="6">
+          <div class="input-box">
+            <span class="title">阴性阀值：</span>
+            <nz-input-number formControlName="nagativeValue"></nz-input-number>
+          </div>
+        </div>
+        <div nz-col nzSpan="6">
+          <div class="input-box">
+            <span class="title">阴性系数：</span>
+            <nz-input-number formControlName="nagativeConst"></nz-input-number>
+          </div>
+        </div>
+        <div nz-col nzSpan="12">
+          <div class="input-box">
+            <span class="title">阴性计算逻辑：</span>
+            <span [innerText]="nagativeMethodString"></span>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="pageForm.get('negativeCalc').value === '系数相加'">
+        <div nz-col nzSpan="6">
+          <div class="input-box">
+            <span class="title">阴性阀值：</span>
+            <nz-input-number formControlName="nagativeValue"></nz-input-number>
+          </div>
+        </div>
+        <div nz-col nzSpan="6">
+          <div class="input-box">
+            <span class="title">阴性系数：</span>
+            <nz-input-number formControlName="nagativeConst"></nz-input-number>
+          </div>
+        </div>
+        <div nz-col nzSpan="12">
+          <div class="input-box">
+            <span class="title">阴性计算逻辑：</span>
+            <span [innerText]="nagativeMethodString"></span>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="pageForm.get('negativeCalc').value === '常量'">
+        <div nz-col nzSpan="6">
+          <div class="input-box">
+            <span class="title">阴性系数：</span>
+            <nz-input-number formControlName="nagativeConst"></nz-input-number>
+          </div>
+        </div>
+        <div nz-col nzSpan="12">
+          <div class="input-box">
+            <span class="title">阴性计算逻辑：</span>
+            <span [innerText]="nagativeMethodString"></span>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <ng-container *ngIf="editMode === '新增'">
+      <nz-divider></nz-divider>
+      <div class="btn-group" nz-row>
+        <button nz-button (click)="reset()">重置</button>
+        <button nz-button nzType="primary" (click)="submitForm()">初始化配置信息</button>
+      </div>
+    </ng-container>
+  </form>
+</div>

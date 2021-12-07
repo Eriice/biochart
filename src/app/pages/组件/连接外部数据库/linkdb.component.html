@@ -1,0 +1,9 @@
+<nz-modal [(nzVisible)]="isVisible" nzTitle="The first Modal" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
+    <button (click)="chooseMdb()">选择mdb文件</button>
+    <br />
+    <button (click)="linkMdb()">连接mdb数据库</button>
+    <br />
+    <button (click)="testQuery()">测试连接</button>
+  </ng-container>
+</nz-modal>

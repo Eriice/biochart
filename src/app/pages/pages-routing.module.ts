@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HbsagComponent } from './hbsag/hbsag.component';
 import { PagesComponent } from './pages.component';
+import { QualityComponent } from './质控汇总/quality.component';
 
 const routes: Routes = [
   {
@@ -9,9 +9,9 @@ const routes: Routes = [
     component: PagesComponent,
     children: [
       {
-        path: 'hbsag',
+        path: '',
         pathMatch: 'full',
-        component: HbsagComponent
+        component: QualityComponent
       }
     ]
   }

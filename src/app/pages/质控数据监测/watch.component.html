@@ -1,0 +1,23 @@
+<div class="input-container">
+  <div class="input-condition">
+    <div class="input-box">
+      <span class="title">试验时间：</span>
+      <nz-range-picker class="input-component" nzSize="small" [(ngModel)]="dateRange">
+      </nz-range-picker>
+    </div>
+  </div>
+
+  <div class="input-btn">
+    <button nz-button nzType="primary" (click)="search()" [disabled]="isLoading">搜索</button>
+    <button nz-button (click)="reset()">重置</button>
+  </div>
+</div>
+
+<div class="data-container">
+  <app-without-framework *ngIf="frameworkStatistic === null" [data]="filterQualityData" [isLoading]="isLoading">
+  </app-without-framework>
+  <app-with-framework *ngIf="frameworkStatistic !== null" [data]="filterQualityData" [isLoading]="isLoading"
+    [calc]="frameworkCalc">
+  </app-with-framework>
+  <app-quality-table [data]="filterQualityData" [isLoading]="isLoading"></app-quality-table>
+</div>

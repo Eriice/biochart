@@ -1,0 +1,11 @@
+.chart {
+    border: 1px solid #f4f3f4;
+    height: 300px;
+}
+
+// 图表工具栏
+.chart-toolbox {
+    display: flex;
+    flex-direction: row;
+    gap: 10px 10px;
+}

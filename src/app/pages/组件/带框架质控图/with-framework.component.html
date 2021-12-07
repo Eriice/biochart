@@ -1,0 +1,8 @@
+<div class="chart-toolbox">
+  <div class="toolbox-item">
+    <span>是否显示失控数据：</span>
+    <nz-switch [(ngModel)]="isShowOutofControlData" (ngModelChange)="updateEchart()" nzSize="small"
+      nzCheckedChildren="是" nzUnCheckedChildren="否"></nz-switch>
+  </div>
+</div>
+<div class="chart" echarts [options]="options" [loading]="isLoading" (chartInit)="onChartInit($event)"></div>

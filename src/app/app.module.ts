@@ -34,7 +34,10 @@ registerLocaleData(zh);
       echarts: () => import('echarts'),
     }),
   ],
-  providers: [{ provide: NZ_I18N, useValue: zh_CN }],
+  providers: [
+    { provide: NZ_I18N, useValue: zh_CN },
+    { provide: "组合分隔符", useValue: "@#@" }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

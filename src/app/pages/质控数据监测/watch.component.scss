@@ -1,28 +1,27 @@
 .input-container {
-    background-color: white;
+    background-color: #f4f3f4;
     padding: 20px;
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
     gap: 10px;
-   
+
     .input-condition {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        // justify-content: flex-start;
         gap: 20px;
 
         .input-component {
             font-size: 14px;
             width: 300px;
         }
-        
+
         .input-box {
             display: flex;
             flex-direction: column;
             gap: 4px;
-        
+
             .title {
                 font-size: 12px;
                 font-weight: bold;
@@ -39,11 +38,9 @@
     }
 }
 
-
-
 .data-container {
     background-color: white;
-    padding: 20px;
+    // padding: 20px;
 }
 
 .chart {

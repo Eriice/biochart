@@ -1,0 +1,31 @@
+<!-- <h4>试验数据</h4>
+
+<nz-table #table [nzData]="listOfData" nzSize="small" nzTableLayout="fixed" nzBordered
+  (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
+  <thead>
+    <tr>
+      <th nzWidth="40px" [nzChecked]="checked" [nzIndeterminate]="indeterminate"
+        (nzCheckedChange)="onAllChecked($event)"></th>
+      <th>日期</th>
+      <th>试验批号</th>
+
+      <th>试剂</th>
+      <th>样品</th>
+
+      <th>操作人</th>
+      <th>od值</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of table.data">
+      <td [nzChecked]="setOfCheckedId.has(data.id)" (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
+      <td>{{ data['创建时间'] | date: 'yyyy-MM-dd' }}</td>
+      <td>{{ data['批次'] }}</td>
+      <td>{{ data['试剂批号'] }}</td>
+      <td>{{ data['样品批号'] }}</td>
+
+      <td>{{ data['操作人'] }}</td>
+      <td>{{ data['测量值'] }}</td>
+    </tr>
+  </tbody>
+</nz-table> -->

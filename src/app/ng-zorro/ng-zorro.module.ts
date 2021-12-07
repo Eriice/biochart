@@ -13,7 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
 import { NzAffixModule } from 'ng-zorro-antd/affix';
-// import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
 // import { NzAnchorModule } from 'ng-zorro-antd/anchor';
 // import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
@@ -39,12 +39,12 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
-// import { NzListModule } from 'ng-zorro-antd/list';
+import { NzListModule } from 'ng-zorro-antd/list';
 // import { NzMentionModule } from 'ng-zorro-antd/mention';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
-// import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 // import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 // import { NzPopoverModule } from 'ng-zorro-antd/popover';
 // import { NzProgressModule } from 'ng-zorro-antd/progress';
@@ -56,9 +56,9 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 // import { NzSliderModule } from 'ng-zorro-antd/slider';
 // import { NzSpinModule } from 'ng-zorro-antd/spin';
 // import { NzStatisticModule } from 'ng-zorro-antd/statistic';
-// import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
-// import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 // import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 // import { NzTimelineModule } from 'ng-zorro-antd/timeline';
@@ -94,7 +94,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
     NzIconModule,
 
     NzAffixModule,
-    // NzAlertModule,
+    NzAlertModule,
     // NzAnchorModule,
     // NzAutocompleteModule,
     NzAvatarModule,
@@ -123,14 +123,14 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
     NzInputModule,
     NzInputNumberModule,
     // NzLayoutModule,
-    // NzListModule,
+    NzListModule,
     // NzMentionModule,
     // NzMenuModule,
     NzMessageModule,
     NzModalModule,
     // NzNoAnimationModule,
     NzNotificationModule,
-    // NzPageHeaderModule,
+    NzPageHeaderModule,
     // NzPaginationModule,
     // NzPopconfirmModule,
     // NzPopoverModule,
@@ -143,10 +143,10 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
     // NzSliderModule,
     // NzSpinModule,
     // NzStatisticModule,
-    // NzStepsModule,
+    NzStepsModule,
     NzSwitchModule,
     // NzTableModule,
-    // NzTabsModule,
+    NzTabsModule,
     NzTagModule,
     // NzTimePickerModule,
     // NzTimelineModule,

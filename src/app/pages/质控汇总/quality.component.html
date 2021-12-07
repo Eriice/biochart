@@ -1,0 +1,44 @@
+<div class="container">
+  <h3>质控监测</h3>
+  <nz-divider [ngStyle]="{ 'margin-bottom.px': 16, 'margin-top.px': 16 }"></nz-divider>
+  <!-- 尚未选择组合 -->
+  <nz-alert *ngIf="currentCombination === null" class="info" nzType="info" nzMessage="请先选择组合">
+  </nz-alert>
+
+  <ng-container *ngIf="currentCombination !== null && framework === null">
+    <app-framework-config [editMode]="'新增'"></app-framework-config>
+  </ng-container>
+
+  <!-- 已经选择组合 -->
+  <ng-container *ngIf="!isCheckConfig && (currentCombination !== null && framework !== null)">
+    <nz-tabset nzType="card" [(nzSelectedIndex)]="currTab" [nzTabBarExtraContent]="extra">
+      <nz-tab nzTitle="质控数据">
+        <app-watch></app-watch>
+      </nz-tab>
+      <nz-tab nzTitle="创建质控框架">
+        <app-framework-create></app-framework-create>
+      </nz-tab>
+      <nz-tab nzTitle="更新质控框架">
+        <app-framework-update></app-framework-update>
+      </nz-tab>
+    </nz-tabset>
+  </ng-container>
+</div>
+
+<ng-template #extra>
+  <button nz-button (click)="initConfig()">初始配置一览</button>
+</ng-template>
+
+<!-- 对话框 -->
+<nz-modal [(nzVisible)]="isCheckConfig" (nzOnCancel)="handleOk()">
+  <app-framework-config [editMode]="'修改'"></app-framework-config>
+  <div *nzModalFooter>
+    <button nz-button nzType="primary" (click)="handleOk()">确定</button>
+  </div>
+</nz-modal>
+
+<!-- 配置模板 -->
+<!-- <ng-template #combinationConfig>
+  <app-framework-config [editMode]="isCheckConfig ? '修改' : '新增'">
+  </app-framework-config>
+</ng-template> -->

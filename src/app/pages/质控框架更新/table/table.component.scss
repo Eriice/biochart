@@ -1,0 +1,17 @@
+::host {
+  margin-bottom: 40px;
+  background-color: red;
+}
+
+.title {
+  padding: 16px 0 8px;
+  display: flex;
+  // flex-direction: row-reverse;
+  justify-content: space-between;
+}
+
+.delete-row {
+  background-image: url("data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWOYOXPmfwAGZQLLnXb+UAAAAABJRU5ErkJggg==");
+  background-repeat: repeat-x;
+  background-position: 50% 50%;
+}

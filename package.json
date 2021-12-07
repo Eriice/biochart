@@ -5,10 +5,32 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "dist": "ng build --base-href ./ && tsc --p electron && electron-builder --win --x64",
     "electron": "ng build --base-href ./ && tsc --p electron && electron electron/dist/main.js"
+  },
+  "main": "electron/dist/main.js",
+  "build": {
+    "appId": "com.xxx.app",
+    "directories": {
+      "output": "builder"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ]
+    },
+    "electronDownload": {
+      "mirror": "https://npm.taobao.org/mirrors/electron/"
+    }
   },
   "private": true,
   "dependencies": {
@@ -21,8 +43,10 @@
     "@angular/platform-browser-dynamic": "~11.2.14",
     "@angular/router": "~11.2.14",
     "@electron/remote": "^2.0.1",
+    "better-lock": "^2.0.0-beta",
+    "dexie": "^3.0.3",
     "echarts": "^5.2.1",
-    "electron": "^15.3.0",
+    "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "mysql": "^2.18.1",
     "ng-zorro-antd": "^11.4.2",
@@ -36,9 +60,12 @@
     "@angular/cli": "~11.2.13",
     "@angular/compiler-cli": "~11.2.14",
     "@types/jasmine": "~3.6.0",
+    "@types/lodash": "^4.14.177",
     "@types/mysql": "^2.15.19",
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",
+    "electron": "^15.3.0",
+    "electron-builder": "^22.13.1",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~6.1.0",

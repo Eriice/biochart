@@ -1,0 +1,42 @@
+<nz-alert *ngIf="frameworkStatistic === null" class="info" nzType="info" nzMessage="尚未创建即刻法框架，请先创建框架">
+</nz-alert>
+
+<ng-container *ngIf="frameworkStatistic !== null">
+  <div class="input-container">
+    <div class="input-condition">
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <div class="input-box">
+            <span class="title">更新截止日期：</span>
+            <nz-date-picker [(ngModel)]="expirationDate"></nz-date-picker>
+          </div>
+        </div>
+      </div>
+
+      <nz-divider></nz-divider>
+      <div class="btn-group" nz-row>
+        <button nz-button nzType="primary" [disabled]="isLoadingData" (click)="preview()">预览数据</button>
+        <button nz-button nzType="primary" [disabled]="isLoadingData || !canBeUpdated"
+          (click)="updateFramework()">确认更新</button>
+        {{ isLoadingData}} {{ canBeUpdated}}
+      </div>
+    </div>
+  </div>
+
+  <div class="preview">
+    <div class="info">
+      <div class="echart">
+        <app-without-framework *ngIf="frameworkStatistic === null" [data]="canbeUpdateData" [isLoading]="isLoadingData">
+        </app-without-framework>
+        <app-with-framework *ngIf="frameworkStatistic !== null" [data]="canbeUpdateData" [isLoading]="isLoadingData"
+          [calc]="frameworkStatistic">
+        </app-with-framework>
+      </div>
+      <div class="statistics">
+        <app-framework-update-list [data]="frameworkList"></app-framework-update-list>
+      </div>
+    </div>
+  </div>
+  <app-quality-table [data]="canbeUpdateData" [isLoading]="isLoadingData"></app-quality-table>
+  <!-- <app-framework-update-table [data]="canbeUpdateData"></app-framework-update-table> -->
+</ng-container>

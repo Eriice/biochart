@@ -1,0 +1,24 @@
+<nz-table #table [nzData]="data" nzSize="small" nzBordered>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>更新截止日期</th>
+      <th>在控数</th>
+      <th>警告数</th>
+      <th>失控数</th>
+      <th>平均值</th>
+      <th>标准差</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of table.data">
+      <td>{{ data['框架统计类型'] }}</td>
+      <td>{{ data['更新截止时间']| date: 'yyyy-MM-dd hh:mm:ss' }}</td>
+      <th>{{ data['在控数'] }}</th>
+      <th>{{ data['警告数'] }}</th>
+      <th>{{ data['失控数'] }}</th>
+      <td>{{ data['平均值'] | number:'1.3-3' }}</td>
+      <td>{{ data['标准差']| number:'1.3-3' }}</td>
+    </tr>
+  </tbody>
+</nz-table>
