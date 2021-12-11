@@ -26,6 +26,12 @@
       "target": [
         "nsis",
         "zip"
+      ],
+      "extraResources": [
+        {
+          "from": "./node_modules/node-adodb/lib/adodb.js",
+          "to": "adodb.js"
+        }
       ]
     },
     "electronDownload": {
@@ -51,6 +57,7 @@
     "mysql": "^2.18.1",
     "ng-zorro-antd": "^11.4.2",
     "ngx-echarts": "^7.0.2",
+    "node-adodb": "^5.0.3",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"

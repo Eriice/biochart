@@ -2,8 +2,13 @@ import { app, BrowserWindow, ipcMain, ipcRenderer, dialog } from "electron";
 import * as path from "path";
 import * as url from "url";
 import * as fs from "fs";
+const ADODB = require('node-adodb')
 
 let win: BrowserWindow;
+
+if (process.mainModule.filename.indexOf("app.asar") !== -1) {
+  ADODB.PATH = './resources/adodb.js';
+}
 
 function createWindow() {
   win = new BrowserWindow({
@@ -87,12 +92,67 @@ ipcMain.on("navigateDirectory", (event, path) => {
   getDirectory();
 });
 
+let connection: any  = null
 ipcMain.on('openDialog', (event, arg) => {
   dialog.showOpenDialog({
     properties: ["openFile"]
   })
     .then(res => {
-      console.log("文件路径", res.filePaths[0])
       res.filePaths.length > 0 && win.webContents.send("fileData", res.filePaths[0])
     })
 })
+
+ipcMain.on('linkdb', (event, arg) => {
+  console.log("arg", arg)
+  connection = ADODB.open(arg)
+})
+
+
+ipcMain.on('adodbQuery', (event, sql: string) => {
+  if (connection === null) return
+  connection.query(sql).then(aaa => {
+    win.webContents.send('replayQuery', aaa, connection)
+  }).catch(err => {
+    win.webContents.send('replayQuery', err, connection)
+  })
+})
+
+
+
+// let connection: any  = ADODB.open(`Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\\code\\biochart.mdb`)
+// ipcMain.on('openDialog', (event, arg) => {
+//   dialog.showOpenDialog({
+//     properties: ["openFile"]
+//   })
+//     .then(res => {
+//       // connection = ADODB.open(`Provider=Microsoft.Jet.OLEDB.4.0;Data Source=${res.filePaths[0]}`)
+//       console.log("connection", connection)
+//       res.filePaths.length > 0 && win.webContents.send("fileData", res.filePaths[0])
+
+//       // console.log("begin open dialog")
+//       // connection.query(`SELECT 批次表.platename as 批次 FROM vsscanrecord as 批次表`).then(aaa => {
+//       //   console.log('res', res)
+//       // res.filePaths.length > 0 && win.webContents.send("fileData", res.filePaths[0], aaa)
+
+//       // }).catch(err => {
+//       //   console.log("err", err)
+//       // res.filePaths.length > 0 && win.webContents.send("fileData", res.filePaths[0], err)
+
+//       // })
+//     })
+// })
+
+// ipcMain.on('linkdb', (event, arg) => {
+//   connection = ADODB.open(`Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\\code\\biochart.mdb`)
+// })
+
+// ipcMain.on('adodbQuery', (event, sql: string) => {
+//   console.log("connection", connection)
+//   if (connection !== null) {
+//     connection.query(sql).then(aaa => {
+//       win.webContents.send('replayQuery', aaa)
+//     }).catch(err => {
+//       win.webContents.send('replayQuery', err)
+//     })
+//   }
+// })

@@ -63,7 +63,8 @@ export class FrameworkUpdateComponent implements OnInit {
   preview() {
     this.canBeUpdated = true
     let 截止时间 = moment(this.expirationDate).add(1, 'days').toDate()
-    this.canbeUpdateData = this.框架数据服务.获取可更新数据(截止时间)
+    let 可更新数据 = this.框架数据服务.获取可更新数据(截止时间)
+    this.canbeUpdateData = 可更新数据
   }
   public canBeUpdated: boolean = false
   // 更新框架
