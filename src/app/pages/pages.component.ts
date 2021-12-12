@@ -61,6 +61,7 @@ export class PagesComponent implements OnInit {
   public experimentCombineList: 试验组合[] = []
   订阅组合列表更新() {
     this.组合服务.试验组合列表$.subscribe(res => {
+      console.log("开始更新组合列表")
       this.experimentCombineLoading = res[0] == 数据状态.更新中
       this.experimentCombineList = res[1]
     })

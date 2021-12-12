@@ -31,7 +31,7 @@ export class LinkdbComponent implements OnInit {
 
   testQuery() {
     this.外部数据库.测试查询().then(res => {
-      console.log("res", res)
+      // console.log("res", res)
     })
   }
 

@@ -34,12 +34,14 @@ export class OriginalDataService {
     return await this.锁.acquire(async () => {
       if (this.数据载入完成) return this._试验数据
       // let 查询字符串 = `select 批次表.platename as 批次, savetime as 创建时间, reportid, comkindname as 试剂名, comkindcat as 试剂批号, comappratus, comcheckdoctor as 操作人, comtempera, comhumidity, commethod, comwavelength, wassetted, holetype, odnumber as 测量值, odstring, decision, c_id as 样品批号, \`row\` as 行号, col as 列号 from vsscanplate as 批次表 join vsscanrecord as 记录表 on (批次表.platename=记录表.platename) WHERE 批次表.comkindcat = '${组合.试剂批号}' and 记录表.c_id = '${组合.样品批号}' and (记录表.c_id like '%qc%') order by 批次表.savetime`
-      let 查询字符串 = `select 批次表.platename as 批次, savetime as 创建时间, reportid, comkindname as 试剂名, comkindcat as 试剂批号, comappratus, comcheckdoctor as 操作人, comtempera, comhumidity, commethod, comwavelength, wassetted, holetype, odnumber as 测量值, odstring, decision, c_id as 样品批号, row as 行号, col as 列号 from vsscanplate as 批次表 left join vsscanrecord as 记录表 on (批次表.platename=记录表.platename) WHERE 批次表.comkindcat = '${组合.试剂批号}' and 记录表.c_id = '${组合.样品批号}' order by 批次表.savetime`
+      let 查询字符串 = `select 批次表.platename as 批次, savetime as 创建时间, reportid, comkindname as 试剂名, comkindcat as 试剂批号, comappratus, comcheckdoctor as 操作人, comtempera, comhumidity, commethod, comwavelength, wassetted, holetype, odnumber as 测量值, odstring, decision, c_id as 样品批号, row as 行号, col as 列号 from vsscanplate as 批次表 left join vsscanrecord as 记录表 on (批次表.platename=记录表.platename) WHERE 批次表.comkindcat = '${组合.试剂批号}' and 记录表.c_id = '${组合.样品批号}' and (记录表.c_id like '%qc%') order by 批次表.savetime`
+      console.log("查询字符串", 查询字符串)
       let 试验数据 = await this.数据服务.查询<批次试验数据[]>(查询字符串)
 
       // 对阴性数据不做缓存处理，防止新增组合后沿用还是旧数据
       // let 查询阴性字符串 = `select platename as 批次, odnumber as 阴性值 from vsscanrecord where decision like '%NC%'`
-      let 查询阴性字符串 = `select platename as 批次, odnumber as 阴性值 from vsscanrecord where decision = 'NC'`
+      let 查询阴性字符串 = `select platename as 批次, odnumber as 阴性值 from vsscanrecord where decision like '%NC%'`
+      console.log("查询阴性字符串", 查询阴性字符串)
       let 阴性数据 = await this.数据服务.查询<批次阴性数据[]>(查询阴性字符串)
       this.构建阴性数据哈希表(阴性数据, 框架)
 

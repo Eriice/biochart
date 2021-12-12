@@ -31,18 +31,20 @@ export class CombinationService {
   private _试验组合列表 = new BehaviorSubject<[数据状态, 试验组合[]]>([数据状态.静止, []])
   试验组合列表$ = this._试验组合列表.asObservable()
   更新试验组合列表(关键字: string = "", 起止日期?: Date[]) {
+    console.log("开始更新试验组合")
     this._试验组合列表.next([数据状态.更新中, []])
     let 查询字符串 = ""
     console.log("起止日期", 起止日期)
     if (起止日期 == undefined || 起止日期.length === 0) {
       // 查询字符串 = `select 批次表.comkindcat as 试剂批号, 记录表.c_id as 样品批号 from vsscanplate as 批次表 join vsscanrecord as 记录表 on (批次表.platename=记录表.platename) where 批次表.comkindname = '${this._当前试验种类}' and 记录表.decision != 'NC' and (批次表.comkindcat like "%${关键字}%" or 记录表.c_id like "%${关键字}%") GROUP BY 批次表.comkindcat, 记录表.c_id`
-      // 查询字符串 = `select 批次表.comkindcat as 试剂批号, 记录表.c_id as 样品批号 from vsscanplate as 批次表 left join vsscanrecord as 记录表 on (批次表.platename=记录表.platename) where 批次表.comkindname = '${this._当前试验种类}' and 记录表.decision <> 'NC' and (批次表.comkindcat like "*${关键字}*" or 记录表.c_id like "*${关键字}*") GROUP BY 批次表.comkindcat, 记录表.c_id`
-      查询字符串 = `select 批次表.comkindcat as 试剂批号, 记录表.c_id as 样品批号 from vsscanplate as 批次表 left join vsscanrecord as 记录表 on (批次表.platename=记录表.platename) where 批次表.comkindname = '${this._当前试验种类}' and 记录表.decision <> 'NC' GROUP BY 批次表.comkindcat, 记录表.c_id`
+      查询字符串 = `select 批次表.comkindcat as 试剂批号, 记录表.c_id as 样品批号 from vsscanplate as 批次表 left join vsscanrecord as 记录表 on (批次表.platename=记录表.platename) where 批次表.comkindname = '${this._当前试验种类}' and 记录表.c_id like "%qc%" and (批次表.comkindcat like "%${关键字}%" or 记录表.c_id like "%${关键字}%") GROUP BY 批次表.comkindcat, 记录表.c_id`
+      // 查询字符串 = `select 批次表.comkindcat as 试剂批号, 记录表.c_id as 样品批号 from vsscanplate as 批次表 left join vsscanrecord as 记录表 on (批次表.platename=记录表.platename) where 批次表.comkindname = '${this._当前试验种类}' and 记录表.decision <> 'NC' GROUP BY 批次表.comkindcat, 记录表.c_id`
     } else {
       // 查询字符串 = `select 批次表.comkindcat as 试剂批号, 记录表.c_id as 样品批号 from vsscanplate as 批次表 join vsscanrecord as 记录表 on (批次表.platename=记录表.platename) where 批次表.comkindname = '${this._当前试验种类}' and 记录表.decision != 'NC' and (批次表.comkindcat like "%${关键字}%" or 记录表.c_id like "%${关键字}%") and 批次表.savetime between FROM_UNIXTIME(${起止日期[0].valueOf() / 1000}) and FROM_UNIXTIME(${起止日期[1].valueOf() / 1000}) GROUP BY 批次表.comkindcat, 记录表.c_id`
-      查询字符串 = `select 批次表.comkindcat as 试剂批号, 记录表.c_id as 样品批号 from vsscanplate as 批次表 left join vsscanrecord as 记录表 on (批次表.platename=记录表.platename) where 批次表.comkindname = '${this._当前试验种类}' and 记录表.decision <> 'NC' and (批次表.comkindcat like "*${关键字}*" or 记录表.c_id like "*${关键字}*") and 批次表.savetime between FROM_UNIXTIME(${起止日期[0].valueOf() / 1000}) and FROM_UNIXTIME(${起止日期[1].valueOf() / 1000}) GROUP BY 批次表.comkindcat, 记录表.c_id`
+      查询字符串 = `select 批次表.comkindcat as 试剂批号, 记录表.c_id as 样品批号 from vsscanplate as 批次表 left join vsscanrecord as 记录表 on (批次表.platename=记录表.platename) where 批次表.comkindname like '%${this._当前试验种类}%' and 记录表.decision <> 'NC' and (批次表.comkindcat like "%${关键字}%" or 记录表.c_id like "%${关键字}%") and 批次表.savetime between FROM_UNIXTIME(${起止日期[0].valueOf() / 1000}) and FROM_UNIXTIME(${起止日期[1].valueOf() / 1000}) GROUP BY 批次表.comkindcat, 记录表.c_id`
     }
     this.数据服务.查询<试验组合[]>(查询字符串).then(v => {
+      console.log("一共有", v.length, '数据')
         this._试验组合列表.next([数据状态.更新成功, v])
     })
   }

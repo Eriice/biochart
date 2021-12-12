@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { 数据中心模版 } from './数据中心模版 ';
 const electron = (<any>window).require('electron');
-
+const remote = (<any>window).require('electron').remote;
+console.log("electron", electron)
+// const ADODB = require('node-adodb')
+// console.log("ADODB:", ADODB.PATH)
 // const adodb = (<any>window).require('node-adodb');
 // const adodb = (<any>window).require('electron').remote.getGlobal('ADODB');
 // adodb.debug = true
@@ -48,7 +51,7 @@ export class AccessmdbService extends 数据中心模版 {
     electron.ipcRenderer.send('adodbQuery', sql);
     return new Promise((resolve, reject) => {
       electron.ipcRenderer.once('replayQuery', (event, data, connection) => {
-        console.log("data", data, connection)
+        console.log("data",sql, data.length)
         resolve(data)
       })
     })
@@ -58,10 +61,8 @@ export class AccessmdbService extends 数据中心模版 {
 
 
   async 测试查询() {
-    const sql = `SELECT 批次表.platename as 批次 FROM vsscanrecord as 批次表`
+    const sql = `select 记录表.platename as 记录 from vsscanrecord as 记录表 where c_id like '%qc%'`
     const res = await this.查询(sql)
-    console.log('测试结果', res)
-
     return res
   }
 

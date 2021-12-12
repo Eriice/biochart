@@ -6,19 +6,27 @@ const ADODB = require('node-adodb')
 
 let win: BrowserWindow;
 
-if (process.mainModule.filename.indexOf("app.asar") !== -1) {
+const 是否开发环境 = process.mainModule.filename.indexOf('app') === -1
+
+global['ADODB'] = ADODB
+
+if (!是否开发环境) {
+  console.log("正式环境")
   ADODB.PATH = './resources/adodb.js';
 }
 
+// if (process.mainModule.filename.indexOf("app.asar") !== -1) {
+//   ADODB.PATH = './resources/adodb.js';
+// }
+// https://blog.csdn.net/weixin_40629244/article/details/115742250
 function createWindow() {
   win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false,
+      contextIsolation: false
     }
-
   });
 
   win.loadURL(

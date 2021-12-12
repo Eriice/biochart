@@ -12,7 +12,6 @@
   },
   "main": "electron/dist/main.js",
   "build": {
-    "appId": "com.xxx.app",
     "directories": {
       "output": "builder"
     },
