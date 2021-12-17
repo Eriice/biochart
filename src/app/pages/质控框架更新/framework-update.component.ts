@@ -64,7 +64,7 @@ export class FrameworkUpdateComponent implements OnInit {
     this.canBeUpdated = true
     let 截止时间 = moment(this.expirationDate).add(1, 'days').toDate()
     let 可更新数据 = this.框架数据服务.获取可更新数据(截止时间)
-    this.canbeUpdateData = 可更新数据
+    this.canbeUpdateData = this.数据转换(可更新数据)
   }
   public canBeUpdated: boolean = false
   // 更新框架
@@ -102,5 +102,12 @@ export class FrameworkUpdateComponent implements OnInit {
       return false
     }
     return true
+  }
+
+  // 转换成页面数据
+  数据转换(数据: 批次试验结果[]) {
+    return 数据.map((v, i) => {
+      return {...v, 序号: ++i}
+    })
   }
 }

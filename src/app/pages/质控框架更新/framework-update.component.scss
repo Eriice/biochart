@@ -9,6 +9,46 @@ nz-divider {
   margin-bottom: 10px;
 }
 
+.input-container {
+  background-color: #f4f3f4;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .input-condition {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 20px;
+
+      .input-component {
+          font-size: 14px;
+          width: 300px;
+      }
+
+      .input-box {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+
+          .title {
+              font-size: 12px;
+              font-weight: bold;
+              color: #555;
+          }
+      }
+  }
+
+  .input-btn {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      gap: 10px;
+  }
+}
+
 // 图表+统计数据
 .info {
   display: flex;
@@ -24,9 +64,4 @@ nz-divider {
 .statistics {
   width: 400px;
   padding-left: 10px;
-}
-
-.btn-group {
-  display: flex;
-  gap: 10px 10px;
 }

@@ -9,3 +9,7 @@ export const 求平均值 = (数据: number[]) => {
     return 数据.reduce((累积值, 当前值) => 累积值 + 当前值) / n
 }
 
+
+export const 保留小数 = (数字: number, n) => {
+    return parseFloat(数字.toFixed(n)) 
+}

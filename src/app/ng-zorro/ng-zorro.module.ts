@@ -30,9 +30,9 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 // import { NzTransButtonModule } from 'ng-zorro-antd/core/trans-button';
 // import { NzWaveModule } from 'ng-zorro-antd/core/wave';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-// import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 // import { NzDrawerModule } from 'ng-zorro-antd/drawer';
-// import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 // import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 // import { NzI18nModule } from 'ng-zorro-antd/i18n';
@@ -110,10 +110,10 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
     // NzCollapseModule,
     // NzCommentModule,
     NzDatePickerModule,
-    // NzDescriptionsModule,
+    NzDescriptionsModule,
     // NzDividerModule,
     // NzDrawerModule,
-    // NzDropDownModule,
+    NzDropDownModule,
     // NzEmptyModule,
     // NzFormModule,
     NzGridModule,

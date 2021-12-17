@@ -19,6 +19,9 @@ import { TableComponent } from './质控框架更新/table/table.component';
 import { ListComponent } from './质控框架更新/list/list.component';
 import { LinkdbComponent } from './组件/连接外部数据库/linkdb.component';
 import { FrameworkConfigComponent } from './质控框架配置/framework-config.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { FilterListPipe } from './filter-list';
+import { ExcludeListPipe } from './exclude-list.pipe';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,9 @@ import { FrameworkConfigComponent } from './质控框架配置/framework-config.
     TableComponent,
     ListComponent,
     LinkdbComponent,
-    FrameworkConfigComponent
+    FrameworkConfigComponent,
+    FilterListPipe,
+    ExcludeListPipe,
   ],
   imports: [
     CommonModule,
@@ -46,6 +51,7 @@ import { FrameworkConfigComponent } from './质控框架配置/framework-config.
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
     }),
+    Ng2SearchPipeModule
   ],
 
 })

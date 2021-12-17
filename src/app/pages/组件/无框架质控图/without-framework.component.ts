@@ -4,6 +4,10 @@ import { EChartsOption } from 'echarts';
 import * as moment from 'moment';
 import { 批次试验数据 } from 'src/app/model/批次试验数据';
 
+interface 图表数据 extends 批次试验数据 {
+  序号: number
+}
+
 @Component({
   selector: 'app-without-framework',
   templateUrl: './without-framework.component.html',
@@ -18,10 +22,11 @@ export class WithoutFrameworkComponent implements OnInit {
     this.图表实例 = e;
   }
 
-  @Input() set data(value: 批次试验数据[]) {
+  @Input() set data(value: 图表数据[]) {
     if (value === null) return
     this.options.xAxis = {
-      data: value.map(v => moment(v.创建时间).format('YYYY-MM-DD kk:mm'))
+      data: value.map(v => v.序号)
+      // data: value.map(v => moment(v.创建时间).format('YYYY-MM-DD kk:mm'))
     }
     this.options.series[0].data = value.map(v => v['测量值/阴性值'])
     if (this.图表实例) {
@@ -70,7 +75,7 @@ export class WithoutFrameworkComponent implements OnInit {
       {
         data: [],
         type: 'line',
-        smooth: true,
+        smooth: false,
         markLine: {
           animation: false,
           symbolSize: 0

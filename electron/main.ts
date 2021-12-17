@@ -1,32 +1,27 @@
 import { app, BrowserWindow, ipcMain, ipcRenderer, dialog } from "electron";
+import { autoUpdater } from "electron-updater"
 import * as path from "path";
 import * as url from "url";
 import * as fs from "fs";
 const ADODB = require('node-adodb')
 
+import {uploadUrl} from "./config";
+
 let win: BrowserWindow;
 
-const 是否开发环境 = process.mainModule.filename.indexOf('app') === -1
-
-global['ADODB'] = ADODB
-
-if (!是否开发环境) {
-  console.log("正式环境")
+if (process.mainModule.filename.indexOf("app.asar") !== -1) {
   ADODB.PATH = './resources/adodb.js';
 }
 
-// if (process.mainModule.filename.indexOf("app.asar") !== -1) {
-//   ADODB.PATH = './resources/adodb.js';
-// }
-// https://blog.csdn.net/weixin_40629244/article/details/115742250
 function createWindow() {
   win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 800,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false
+      contextIsolation: false,
     }
+
   });
 
   win.loadURL(
@@ -37,11 +32,15 @@ function createWindow() {
     })
   );
 
+  // 打开调试
   win.webContents.openDevTools();
 
   win.on("closed", () => {
     win = null;
   });
+
+  // 尝试更新
+  updateHandle()
 }
 
 app.on("ready", createWindow);
@@ -94,7 +93,6 @@ function getDirectory() {
 }
 
 ipcMain.on("navigateDirectory", (event, path) => {
-  console.log("on nav")
   process.chdir(path);
   getImages();
   getDirectory();
@@ -111,56 +109,72 @@ ipcMain.on('openDialog', (event, arg) => {
 })
 
 ipcMain.on('linkdb', (event, arg) => {
-  console.log("arg", arg)
   connection = ADODB.open(arg)
+  // connection = ADODB.open(`Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\\Users\\wbin_120295906419210\\Downloads\\biochart.mdb`)
+  console.log("2. 连接信息：", connection)
 })
 
 
-ipcMain.on('adodbQuery', (event, sql: string) => {
-  if (connection === null) return
-  connection.query(sql).then(aaa => {
-    win.webContents.send('replayQuery', aaa, connection)
-  }).catch(err => {
-    win.webContents.send('replayQuery', err, connection)
+ipcMain.on('sqlQuery', (event, sql: string) => {
+  if (connection === null) {
+    event.reply('sqlResult', [], connection)
+  } else {
+    connection.query(sql).then(data => {
+      event.reply('sqlResult', data, '成功')
+    }).catch(err => {
+      event.reply('sqlResult', err, '失败')
+    })
+  }
+})
+
+
+// 检测更新，在你想要检查更新的时候执行，renderer事件触发后的操作自行编写
+function updateHandle() {
+  let message = {
+    error: '检查更新出错',
+    checking: '正在检查更新……',
+    updateAva: '检测到新版本，正在下载……',
+    updateNotAva: '现在使用的就是最新版本，不用更新',
+  };
+  const os = require('os');
+
+  autoUpdater.setFeedURL(uploadUrl);
+  autoUpdater.on('error', function (error) {
+    sendUpdateMessage(message.error)
+  });
+  autoUpdater.on('checking-for-update', function () {
+    sendUpdateMessage(message.checking)
+  });
+  autoUpdater.on('update-available', function (info) {
+    sendUpdateMessage(message.updateAva)
+  });
+  autoUpdater.on('update-not-available', function (info) {
+    sendUpdateMessage(message.updateNotAva)
+  });
+
+  // 更新下载进度事件
+  autoUpdater.on('download-progress', function (progressObj) {
+    win.webContents.send('downloadProgress', progressObj)
   })
-})
+  autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateUrl, quitAndUpdate) {
 
+    ipcMain.on('isUpdateNow', (e, arg) => {
+      console.log(arguments);
+      console.log("开始更新");
+      //some code here to handle event
+      autoUpdater.quitAndInstall();
+    });
 
+    win.webContents.send('isUpdateNow')
+  });
 
-// let connection: any  = ADODB.open(`Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\\code\\biochart.mdb`)
-// ipcMain.on('openDialog', (event, arg) => {
-//   dialog.showOpenDialog({
-//     properties: ["openFile"]
-//   })
-//     .then(res => {
-//       // connection = ADODB.open(`Provider=Microsoft.Jet.OLEDB.4.0;Data Source=${res.filePaths[0]}`)
-//       console.log("connection", connection)
-//       res.filePaths.length > 0 && win.webContents.send("fileData", res.filePaths[0])
+  ipcMain.on("checkForUpdate", () => {
+      //执行自动更新检查
+      autoUpdater.checkForUpdates();
+  })
+}
 
-//       // console.log("begin open dialog")
-//       // connection.query(`SELECT 批次表.platename as 批次 FROM vsscanrecord as 批次表`).then(aaa => {
-//       //   console.log('res', res)
-//       // res.filePaths.length > 0 && win.webContents.send("fileData", res.filePaths[0], aaa)
-
-//       // }).catch(err => {
-//       //   console.log("err", err)
-//       // res.filePaths.length > 0 && win.webContents.send("fileData", res.filePaths[0], err)
-
-//       // })
-//     })
-// })
-
-// ipcMain.on('linkdb', (event, arg) => {
-//   connection = ADODB.open(`Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\\code\\biochart.mdb`)
-// })
-
-// ipcMain.on('adodbQuery', (event, sql: string) => {
-//   console.log("connection", connection)
-//   if (connection !== null) {
-//     connection.query(sql).then(aaa => {
-//       win.webContents.send('replayQuery', aaa)
-//     }).catch(err => {
-//       win.webContents.send('replayQuery', err)
-//     })
-//   }
-// })
+// 通过main进程发送事件给renderer进程，提示更新信息
+function sendUpdateMessage(text) {
+  win.webContents.send('message', text)
+}

@@ -46,7 +46,7 @@ export class WatchComponent implements OnInit {
       }),
     ).subscribe(([试验数据, 框架统计]) => {
       this.质控数据 = 试验数据
-      // this.frameworkStatistic = 框架统计
+      this.frameworkStatistic = 框架统计
       this.reset()
     })
   }
@@ -56,17 +56,25 @@ export class WatchComponent implements OnInit {
   search() {
     // 筛选时间
     if (this.dateRange === null) {
-      this.filterQualityData = this.质控数据
+      this.filterQualityData = this.数据转换(this.质控数据)
     } else {
-      this.filterQualityData = this.质控数据.filter(v => {
+      let 筛选数据 = this.质控数据.filter(v => {
         return v.创建时间.valueOf() >= this.dateRange[0].valueOf() && v.创建时间.valueOf() <= this.dateRange[1].valueOf()
       })
+      this.filterQualityData = this.数据转换(筛选数据)
     }
   }
 
   // 重置搜索条件
   reset() {
     this.dateRange = []
-    this.filterQualityData = this.质控数据
+    this.filterQualityData = this.数据转换(this.质控数据)
+  }
+
+  // 转换成页面数据
+  数据转换(数据: 试验数据[]) {
+    return 数据.map((v, i) => {
+      return {...v, 序号: ++i}
+    })
   }
 }

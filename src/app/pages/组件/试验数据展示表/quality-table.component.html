@@ -2,9 +2,10 @@
   <a nz-button nzSize="small" nzType="link">导出csv</a>
 </div>
 
-<nz-table #table [nzData]="data" nzSize="small" nzBordered [nzLoading]="isLoading">
+<nz-table class="table" #table [nzData]="data" nzSize="small" nzBordered [nzLoading]="isLoading" nzPaginationType="small" nzPageSize="50" [nzScroll]="{ y: '400px' }" >
   <thead>
     <tr>
+      <th nzWidth="60px">序号</th>
       <th>日期</th>
       <th>试验批号</th>
 
@@ -17,12 +18,13 @@
   </thead>
   <tbody>
     <tr *ngFor="let data of table.data">
+      <td>{{ data['序号'] }}</td>
       <td>{{ data['创建时间'] | date: 'yyyy-MM-dd' }}</td>
-      <td>{{ data['批次'] }}</td>
+      <td>{{ data['批次']  }}</td>
       <td>{{ data['操作人'] }}</td>
-      <td>{{ data['测量值'] }}</td>
-      <td>{{ data['阴性值'] }}</td>
-      <td>{{ data['测量值/阴性值'] }}</td>
+      <td>{{ data['测量值'] | number:'1.3-3' }}</td>
+      <td>{{ data['阴性值'] | number:'1.3-3' }}</td>
+      <td>{{ data['测量值/阴性值'] | number:'1.3-3' }}</td>
       <td>
         <nz-tag *ngIf="A[data['结果']] == '在控'" nzColor="success">在控</nz-tag>
         <nz-tag *ngIf="A[data['结果']] == '警告'" nzColor="warning">警告</nz-tag>

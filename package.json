@@ -1,6 +1,6 @@
 {
   "name": "biochart",
-  "version": "0.0.0",
+  "version": "0.3.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -33,9 +33,20 @@
         }
       ]
     },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": true,
+      "createDesktopShortcut": true
+    },
     "electronDownload": {
       "mirror": "https://npm.taobao.org/mirrors/electron/"
-    }
+    },
+    "publish": [
+      {
+        "provider": "generic",
+        "url": "https://6f6e-online-2gzxp1kpdeebbfab-1306429767.tcb.qcloud.la/download/"
+      }
+    ]
   },
   "private": true,
   "dependencies": {
@@ -51,10 +62,12 @@
     "better-lock": "^2.0.0-beta",
     "dexie": "^3.0.3",
     "echarts": "^5.2.1",
+    "electron-updater": "^4.6.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "mysql": "^2.18.1",
     "ng-zorro-antd": "^11.4.2",
+    "ng2-search-filter": "^0.5.1",
     "ngx-echarts": "^7.0.2",
     "node-adodb": "^5.0.3",
     "rxjs": "~6.6.0",

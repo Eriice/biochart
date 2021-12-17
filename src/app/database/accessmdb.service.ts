@@ -1,15 +1,6 @@
 import { Injectable } from '@angular/core';
 import { 数据中心模版 } from './数据中心模版 ';
 const electron = (<any>window).require('electron');
-const remote = (<any>window).require('electron').remote;
-console.log("electron", electron)
-// const ADODB = require('node-adodb')
-// console.log("ADODB:", ADODB.PATH)
-// const adodb = (<any>window).require('node-adodb');
-// const adodb = (<any>window).require('electron').remote.getGlobal('ADODB');
-// adodb.debug = true
-// console.log("ADODB.PATH",adodb, adodb.PATH)
-
 
 @Injectable({
   providedIn: 'root'
@@ -18,14 +9,9 @@ export class AccessmdbService extends 数据中心模版 {
 
   constructor() {
     super()
-
-    // TODO 只识别 mdb
-    electron.ipcRenderer.on('fileData', (event, 文件路径: string, res) => {
-      this.MDB文件路径 = 文件路径
-    })
   }
   // 是否已经连接上数据库
-  public isLinkDB: boolean = false;
+  public 是否已经连接数据库: boolean = false;
 
   // 数据库连接字符串
   private MDB文件路径: string
@@ -38,38 +24,41 @@ export class AccessmdbService extends 数据中心模版 {
 
   private 数据库连接: any
 
-  连接数据库(): void {
+  连接数据库() {
     const 连接字符串 = `${this.驱动字符串};Data Source=${this.MDB文件路径};`
-    // let connection = adodb.open(连接字符串)
-    // console.log("connection", connection)
-    // this.数据库连接 = connection
     electron.ipcRenderer.send('linkdb', 连接字符串);
-    this.isLinkDB = true
+    this.是否已经连接数据库 = true
   }
 
   查询<T>(sql: string): Promise<T> {
-    electron.ipcRenderer.send('adodbQuery', sql);
+    electron.ipcRenderer.send('sqlQuery', sql);
     return new Promise((resolve, reject) => {
-      electron.ipcRenderer.once('replayQuery', (event, data, connection) => {
-        console.log("data",sql, data.length)
-        resolve(data)
+      electron.ipcRenderer.once('sqlResult', (event, data, 状态) => {
+        if (状态 === "成功") {
+          resolve(data)
+        } else {
+          reject(data)
+        }
       })
     })
-    // console.log("sql", sql)
-    // return this.数据库连接.query(sql)
   }
 
-
+  // 搜索项目作为测试查询
   async 测试查询() {
     const sql = `select 记录表.platename as 记录 from vsscanrecord as 记录表 where c_id like '%qc%'`
     const res = await this.查询(sql)
     return res
   }
 
-  获取Mdb文件路径(): void {
+  获取Mdb文件路径(): Promise<string> {
     electron.ipcRenderer.send('openDialog', "");
+
+    return new Promise((resolve, reject) => {
+        // TODO 只识别 mdb
+      electron.ipcRenderer.once('fileData', (event, 文件路径: string) => {
+        this.MDB文件路径 = 文件路径
+        resolve(文件路径)
+      })
+    })
   }
 }
-
-// select 批次表.platename as 批次, savetime as 创建时间, reportid, comkindname as 试剂名, comkindcat as 试剂批号, comappratus, comcheckdoctor as 操作人, comtempera, comhumidity, commethod, comwavelength, wassetted, holetype, odnumber as 测量值, odstring, decision, c_id as 样品批号, \`row\` as 行号, col as 列号 from vsscanplate as 批次表 join vsscanrecord as 记录表 on (批次表.platename=记录表.platename) WHERE 批次表.comkindcat = '${组合.试剂批号}' and 记录表.c_id = '${组合.样品批号}' and (记录表.c_id like '%qc%') order by 批次表.savetime`
- 

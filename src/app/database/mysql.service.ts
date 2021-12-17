@@ -8,17 +8,17 @@ const mysql = (<any>window).require('mysql');
 })
 export class MysqlService extends 数据中心模版 {
 
-  isLinkDB: boolean;
+  是否已经连接数据库: boolean;
 
   mysql连接: Connection;
 
   连接数据库(): void {
     this.mysql连接.connect((err) => {
       if (err) {
-        this.isLinkDB = false
+        this.是否已经连接数据库 = false
         return console.log(err.stack)
       }
-      this.isLinkDB = true
+      this.是否已经连接数据库 = true
     })
   }
 

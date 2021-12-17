@@ -4,22 +4,16 @@
 <ng-container *ngIf="frameworkStatistic !== null">
   <div class="input-container">
     <div class="input-condition">
-      <div nz-row>
-        <div nz-col nzSpan="24">
-          <div class="input-box">
-            <span class="title">更新截止日期：</span>
-            <nz-date-picker [(ngModel)]="expirationDate"></nz-date-picker>
-          </div>
-        </div>
+      <div class="input-box">
+        <span class="title">更新截止日期：</span>
+        <nz-date-picker class="input-component" nzSize="small" [(ngModel)]="expirationDate"></nz-date-picker>
       </div>
-
-      <nz-divider></nz-divider>
-      <div class="btn-group" nz-row>
-        <button nz-button nzType="primary" [disabled]="isLoadingData" (click)="preview()">预览数据</button>
-        <button nz-button nzType="primary" [disabled]="isLoadingData || !canBeUpdated"
-          (click)="updateFramework()">确认更新</button>
-        {{ isLoadingData}} {{ canBeUpdated}}
-      </div>
+    </div>
+  
+    <div class="input-btn">
+      <button nz-button nzType="primary" [disabled]="isLoadingData" (click)="preview()">预览数据</button>
+          <button nz-button nzType="primary" [disabled]="isLoadingData || !canBeUpdated"
+            (click)="updateFramework()">确认更新</button>
     </div>
   </div>
 

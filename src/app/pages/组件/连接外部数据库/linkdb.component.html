@@ -1,9 +1,19 @@
-<nz-modal [(nzVisible)]="isVisible" nzTitle="The first Modal" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+<nz-modal [(nzVisible)]="isVisible" nzClosable="false" nzTitle="欢迎使用质控管理系统" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
   <ng-container *nzModalContent>
-    <button (click)="chooseMdb()">选择mdb文件</button>
-    <br />
-    <button (click)="linkMdb()">连接mdb数据库</button>
-    <br />
-    <button (click)="testQuery()">测试连接</button>
+    <nz-list nzBordered nzSize="small">
+      <nz-list-item>
+        <span nz-typography><mark>数据库地址：{{MDBFilePath}}</mark></span>
+        <br />
+        <button class="btn" (click)="chooseMdb()">选择mdb文件</button>
+      </nz-list-item>
+      <nz-list-item>
+        <span nz-typography><mark>数据库状态：
+          <nz-tag *ngIf="linkStatus" nzColor="success">已连接</nz-tag>
+          <nz-tag *ngIf="!linkStatus" nzColor="error">未连接</nz-tag>
+        </mark></span>
+        <br />
+        <button class="btn" (click)="linkMdb()">连接数据库</button>
+      </nz-list-item>
+    </nz-list>
   </ng-container>
 </nz-modal>

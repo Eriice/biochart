@@ -1,7 +1,7 @@
 
 export abstract class 数据中心模版 {
     // 是否已经连接数据库
-    abstract isLinkDB: boolean
+    abstract 是否已经连接数据库: boolean
 
     public abstract 连接数据库(): void
 

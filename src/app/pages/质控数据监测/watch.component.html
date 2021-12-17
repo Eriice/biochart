@@ -17,7 +17,7 @@
   <app-without-framework *ngIf="frameworkStatistic === null" [data]="filterQualityData" [isLoading]="isLoading">
   </app-without-framework>
   <app-with-framework *ngIf="frameworkStatistic !== null" [data]="filterQualityData" [isLoading]="isLoading"
-    [calc]="frameworkCalc">
+    [calc]="frameworkStatistic">
   </app-with-framework>
   <app-quality-table [data]="filterQualityData" [isLoading]="isLoading"></app-quality-table>
 </div>

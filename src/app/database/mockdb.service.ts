@@ -9,7 +9,7 @@ import { 批次阴性数据 } from '../model/批次阴性数据';
   providedIn: 'root'
 })
 export class MockdbService extends 数据中心模版 {
-  public isLinkDB: boolean;
+  public 是否已经连接数据库: boolean;
 
   连接数据库(): void {
     console.log("模拟连接成功")

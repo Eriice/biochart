@@ -5,12 +5,40 @@
         <h1>BIOTOOL</h1>
       </div>
       <ul nz-menu nzMode="horizontal" class="header-menu">
-        <li class="top-nav" nz-menu-item [nzSelected]="item[1] == currExperimentType"
-          *ngFor="let item of experimentType" (click)=changeExperimentType(item[1])>
-          {{item[0]}}</li>
+        <li nz-submenu nzTitle="HBsAg">
+          <ul>
+            <li nz-menu-item (click)=changeExperimentType(item) *ngFor="let item of experimentTypeList | filterList: 'hbsag' ">{{item}}</li>
+          </ul>
+        </li>
+        <li nz-submenu nzTitle="HCV">
+          <ul>
+            <li nz-menu-item (click)=changeExperimentType(item) *ngFor="let item of experimentTypeList | filterList: 'hcv'">{{item}}</li>
+          </ul>
+        </li>
+        <li nz-submenu nzTitle="HIV">
+          <ul>
+            <li nz-menu-item (click)=changeExperimentType(item) *ngFor="let item of experimentTypeList | filterList: 'hiv'">{{item}}</li>
+          </ul>
+        </li>
+        <li nz-submenu nzTitle="TP">
+          <ul>
+            <li nz-menu-item (click)=changeExperimentType(item) *ngFor="let item of experimentTypeList | filterList: 'tp'">{{item}}</li>
+          </ul>
+        </li>
+        <li nz-submenu nzTitle="CMV">
+          <ul>
+            <li nz-menu-item (click)=changeExperimentType(item) *ngFor="let item of experimentTypeList | filterList: 'cmv'">{{item}}</li>
+          </ul>
+        </li>
+        <li nz-submenu nzTitle="其他">
+          <ul>
+            <li nz-menu-item (click)=changeExperimentType(item) *ngFor="let item of experimentTypeList | excludeList: 'hbsag':'hcv':'hiv':'tp':'cmv'">{{item}}</li>
+          </ul>
+        </li>
       </ul>
       <div class="link-db">
         <a nz-button nzType="link" (click)="showModal()">配置连接信息</a>
+        <a nz-button nzType="link" (click)="updateSoft()">更新</a>
         <app-linkdb [(isVisible)]="isLinkDbVisible"></app-linkdb>
       </div>
     </div>

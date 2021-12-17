@@ -12,7 +12,7 @@ export interface 试验批次 {
     comappratus?: string
     // comcheckdoctor
     操作人: string
-    comtempera: string
+    comtemperature: string
     comhumidity: string
     commethod: string
     comwavelength: string
