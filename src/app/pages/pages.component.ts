@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 const electron = (<any>window).require('electron');
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { AccessmdbService } from '../database/accessmdb.service';
+import { LocaldbService } from '../database/localdb.service';
 import { 试验组合 } from '../model/试验组合';
 import { 数据状态 } from '../枚举/数据状态';
 import { CombinationService } from './服务/组合服务';
@@ -15,14 +17,18 @@ import { CombinationService } from './服务/组合服务';
 export class PagesComponent implements OnInit {
   constructor(
     private readonly 组合服务: CombinationService,
+    private readonly 外部数据服务: AccessmdbService,
+    private readonly 本地数据服务: LocaldbService
   ) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.订阅试验种类();
     this.订阅组合更新();
     this.订阅组合列表更新();
     this.订阅关键字更新();
+
+    await this.连接数据库并获取试验种类()
 
     electron.ipcRenderer.on("message", (event, text) => {
           console.log("arguments2", text);
@@ -38,13 +44,20 @@ export class PagesComponent implements OnInit {
       });
   }
 
+  async 连接数据库并获取试验种类() {
+    let 数据库连接 = await this.本地数据服务.获取最初数据库连接()
+    if (数据库连接 !== null) {
+      this.外部数据服务.连接数据库(数据库连接.连接字符串);
+      await this.组合服务.设置试验种类列表()
+    }
+  }
+
   // 试验种类
   public experimentTypeList: string[] = []
   订阅试验种类() {
     this.组合服务.试验种类列表$.subscribe(res => {
       this.experimentTypeList = res
-      // this.experimentTypeList = ['1111111', '1111112', '11113', '533133', '111212111', '111131132', '11113', '22224', '53333', '11121111', '11111132', '11113', '22224', '53333']
-      this.组合服务.设置当前试验种类(null)
+        this.组合服务.设置当前试验种类(null)
     })
   }
   public currExperimentType = this.组合服务.获取当前试验种类()

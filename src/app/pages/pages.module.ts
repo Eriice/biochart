@@ -22,6 +22,7 @@ import { FrameworkConfigComponent } from './质控框架配置/framework-config.
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { FilterListPipe } from './filter-list';
 import { ExcludeListPipe } from './exclude-list.pipe';
+import { CvPipe } from './cv.pipe';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { ExcludeListPipe } from './exclude-list.pipe';
     FrameworkConfigComponent,
     FilterListPipe,
     ExcludeListPipe,
+    CvPipe,
   ],
   imports: [
     CommonModule,

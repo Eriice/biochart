@@ -55,7 +55,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 // import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 // import { NzSliderModule } from 'ng-zorro-antd/slider';
 // import { NzSpinModule } from 'ng-zorro-antd/spin';
-// import { NzStatisticModule } from 'ng-zorro-antd/statistic';
+import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
@@ -142,7 +142,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
     // NzSkeletonModule,
     // NzSliderModule,
     // NzSpinModule,
-    // NzStatisticModule,
+    NzStatisticModule,
     NzStepsModule,
     NzSwitchModule,
     // NzTableModule,

@@ -18,16 +18,22 @@ export class AccessmdbService extends 数据中心模版 {
   // private 驱动字符串: string = "Provider=Microsoft.ACE.OLEDB.12.0"
   private 驱动字符串: string = "Provider=Microsoft.Jet.OLEDB.4.0"
 
-  private get 连接字符串(): string {
-    return `${this.驱动字符串};Data Source=${this.MDB文件路径};`
-  }
+  public 连接字符串: string = ""
+  // public get 连接字符串(): string {
+  //   return `${this.驱动字符串};Data Source=${this.MDB文件路径};`
+  // }
 
   private 数据库连接: any
 
-  连接数据库() {
-    const 连接字符串 = `${this.驱动字符串};Data Source=${this.MDB文件路径};`
-    electron.ipcRenderer.send('linkdb', 连接字符串);
+  连接数据库(连接字符串?: string) {
+    if (连接字符串 === undefined) {
+      this.连接字符串 = `${this.驱动字符串};Data Source=${this.MDB文件路径};`
+    } else {
+      this.连接字符串 = 连接字符串
+    }
     this.是否已经连接数据库 = true
+    console.log("this.是否已经连接数据",this.是否已经连接数据库)
+    electron.ipcRenderer.send('linkdb', this.连接字符串);
   }
 
   查询<T>(sql: string): Promise<T> {

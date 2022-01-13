@@ -1,8 +1,19 @@
-<div class="chart-toolbox">
-  <div class="toolbox-item">
-    <span>是否显示失控数据：</span>
-    <nz-switch [(ngModel)]="isShowOutofControlData" (ngModelChange)="updateEchart()" nzSize="small"
-      nzCheckedChildren="是" nzUnCheckedChildren="否"></nz-switch>
+<div class="header">
+  <h3>质控记录</h3>
+  <div class="chart-toolbox">
+    <div class="toolbox-item">
+      <span>显示失控数据：</span>
+      <nz-switch [(ngModel)]="isShowOutofControlData" (ngModelChange)="updateEchart()" nzSize="small"
+        nzCheckedChildren="是" nzUnCheckedChildren="否"></nz-switch>
+    </div>
+  </div>
+  <div class="frameworkStatistic">
+    <div nz-row [nzGutter]="16">
+      <div nz-col [nzSpan]="8"><b>平均值：</b>{{statistic['平均值'] | number:'1.3-3'}}</div>
+      <div nz-col [nzSpan]="8"><b>标准差：</b>{{statistic['标准差'] | number:'1.3-3'}}</div>
+      <div nz-col [nzSpan]="8"><b>变异系数: </b>{{ (statistic['标准差'] / statistic['平均值'] ) | cv}}</div>
+    </div>
   </div>
 </div>
+
 <div class="chart" echarts [options]="options" [loading]="isLoading" (chartInit)="onChartInit($event)"></div>

@@ -25,7 +25,9 @@ export class WithFrameworkComponent implements OnInit {
     this.updateEchart()
   }
 
-  @Input() set calc(val: { 平均值: number, 标准差: number }) {
+  public statistic
+  @Input() set calc(val) {
+    this.statistic = val
     let { 平均值, 标准差 } = val
 
     let min = (平均值 - 标准差 * 4)

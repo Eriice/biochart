@@ -1,5 +1,5 @@
 <div class="title">
-  <a nz-button nzSize="small" nzType="link">导出csv</a>
+  <a nz-button nzSize="small" nzType="link" (click)="export()">导出excel</a>
 </div>
 
 <nz-table class="table" #table [nzData]="data" nzSize="small" nzBordered [nzLoading]="isLoading" nzPaginationType="small" nzPageSize="50" [nzScroll]="{ y: '400px' }" >

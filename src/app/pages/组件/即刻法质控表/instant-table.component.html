@@ -30,9 +30,9 @@
             <td>{{ data['批次'] }}</td>
             <td>{{ data['创建时间'] | date: 'yyyy-MM-dd' }}</td>
             <td>{{ data['操作人'] }}</td>
-            <td>{{ data['测量值'] }}</td>
-            <td>{{ data['阴性值'] }}</td>
-            <td>{{ data['测量值/阴性值']}}</td>
+            <td>{{ data['测量值'] | number:'1.3-3' }}</td>
+            <td>{{ data['阴性值'] | number:'1.3-3' }}</td>
+            <td>{{ data['测量值/阴性值'] | number:'1.3-3'}}</td>
             <!-- <td>{{ data['测量值/阴性值'] | number:'1.3-3'}}</td> -->
             <td>{{ data['n3s'] }}</td>
             <td>{{ data['n2s'] }}</td>

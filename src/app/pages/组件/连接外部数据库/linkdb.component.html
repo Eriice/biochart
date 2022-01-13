@@ -2,9 +2,12 @@
   <ng-container *nzModalContent>
     <nz-list nzBordered nzSize="small">
       <nz-list-item>
-        <span nz-typography><mark>数据库地址：{{MDBFilePath}}</mark></span>
+        <span nz-typography><mark>数据库地址：
+          <nz-tag *ngIf="MDBFilePath !== null || linkStatus" nzColor="success">已选择</nz-tag>
+          <nz-tag *ngIf="MDBFilePath === null && !linkStatus" nzColor="error">未选择</nz-tag>
+        </mark></span>
         <br />
-        <button class="btn" (click)="chooseMdb()">选择mdb文件</button>
+        <button class="btn" (click)="chooseMdb()" [disabled]="linkStatus">选择mdb文件</button>
       </nz-list-item>
       <nz-list-item>
         <span nz-typography><mark>数据库状态：
@@ -12,7 +15,7 @@
           <nz-tag *ngIf="!linkStatus" nzColor="error">未连接</nz-tag>
         </mark></span>
         <br />
-        <button class="btn" (click)="linkMdb()">连接数据库</button>
+        <button class="btn" (click)="linkMdb()" [disabled]="linkStatus">连接数据库</button>
       </nz-list-item>
     </nz-list>
   </ng-container>

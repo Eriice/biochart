@@ -3,9 +3,24 @@
     height: 300px;
 }
 
-// 图表工具栏
-.chart-toolbox {
-    display: flex;
-    flex-direction: row;
-    gap: 10px 10px;
+.header {
+    position: relative;
+
+    h3 {
+        text-align: center;
+    }
+
+    // 图表工具栏
+    .chart-toolbox {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: flex-end;
+        gap: 10px 10px;
+    }
 }
+
+
